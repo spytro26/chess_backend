@@ -17,5 +17,9 @@
     "chess.js": "^1.1.0",
     "typescript": "^5.9.2",
     "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@types/chess.js": "^0.13.7",
+    "@types/node": "^24.3.0"
   }
 }
