@@ -39,6 +39,15 @@ class GameManager {
                     game.makeMove(socket, message.payload.move);
                 }
             }
+            if (message.type == 'promote') {
+                console.log("type promote detected in backend");
+                const game = this.games.find(game => game.player1 === socket || game.player2 === socket);
+                if (game) {
+                    console.log("find the game");
+                    console.log(message.payload.move);
+                    game.doPromote(socket, message.payload.move, message.piece);
+                }
+            }
         });
     }
 }

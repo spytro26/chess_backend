@@ -60,25 +60,7 @@ export class Game {
             this.totalmoves--;
         }
         
-        if(this.board.isGameOver()){
-                this.player1.send(JSON.stringify({
-                    type : GAME_OVER,
-                    payload : {
-                        winner : this.board.turn()==="w"  ? "black"  : "white"
-                    }
-                }));
-
-
-                this.player1.send(JSON.stringify({
-                    type : GAME_OVER,
-                    payload : {
-                        winner : this.board.turn()==="w"  ? "black"  : "white"
-                    }
-                }));
-
-                return ; 
-
-        }
+       
 
         if(this.totalmoves%2 ===0 ){
             console.log("move send to user 1")
@@ -95,9 +77,105 @@ export class Game {
 
             }))
         }
+
+
+         if(this.board.isGameOver()){
+                this.player1.send(JSON.stringify({
+                    type : GAME_OVER,
+                    payload : {
+                        winner : this.board.turn()==="w"  ? "black"  : "white"
+                    }
+                }));
+
+
+                this.player2.send(JSON.stringify({
+                    type : GAME_OVER,
+                    payload : {
+                        winner : this.board.turn()==="w"  ? "black"  : "white"
+                    }
+                }));
+
+                return ; 
+
+        }
+
             
         
 
 
     }
+
+doPromote (socket : WebSocket,promote : {from : any , to : any , square : any }, pawn  : any ){
+ const currentTurn = this.board.turn(); // "w" for white, "b" for black
+
+  // Enforce turn-based moves:
+  if ((currentTurn === "w" && socket !== this.player1) ||
+      (currentTurn === "b" && socket !== this.player2)) {
+    console.log("Not your turn!");
+    return;
+  }
+    console.log(promote.from);
+    console.log(promote.to);
+    console.log(pawn);
+    try {
+        this.totalmoves++;
+      this.board.move({
+  from: promote.from,
+  to: promote.to,
+  promotion: pawn, // "q" | "r" | "n" | "b"
+});
+    }catch(e){
+        console.log("error aa gya yrr durign promotion");
+        this.totalmoves--;
+        return ; 
+
+    }
+
+
+console.log("type promote running babe");
+
+
+    
+        if(this.totalmoves%2 ===0 ){
+            console.log("move send to user 1")
+            this.player1.send(JSON.stringify({
+                type : "promote",
+                payload : promote,
+                pawn
+            }))
+        }
+        else {
+            console.log("move send to user 2");
+            this.player2.send(JSON.stringify({
+                type : "promote" , 
+                payload : promote,
+                pawn,
+
+            }))
+        }
+
+
+ 
+         if(this.board.isGameOver()){
+                this.player1.send(JSON.stringify({
+                    type : GAME_OVER,
+                    payload : {
+                        winner : this.board.turn()==="w"  ? "black"  : "white"
+                    }
+                }));
+
+
+                this.player2.send(JSON.stringify({
+                    type : GAME_OVER,
+                    payload : {
+                        winner : this.board.turn()==="w"  ? "black"  : "white"
+                    }
+                }));
+
+                return ; 
+
+        }
+
+
+}
 }
