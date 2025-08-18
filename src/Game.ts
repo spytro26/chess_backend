@@ -83,7 +83,7 @@ export class Game {
                 this.player1.send(JSON.stringify({
                     type : GAME_OVER,
                     payload : {
-                        winner : this.board.turn()==="w"  ? "black"  : "white"
+                        winner : this.board.turn()==="w"  ? "b"  : "w"
                     }
                 }));
 
@@ -91,7 +91,7 @@ export class Game {
                 this.player2.send(JSON.stringify({
                     type : GAME_OVER,
                     payload : {
-                        winner : this.board.turn()==="w"  ? "black"  : "white"
+                        winner : this.board.turn()==="w"  ? "b"  : "w"
                     }
                 }));
 
@@ -160,7 +160,7 @@ console.log("type promote running babe");
                 this.player1.send(JSON.stringify({
                     type : GAME_OVER,
                     payload : {
-                        winner : this.board.turn()==="w"  ? "black"  : "white"
+                        winner : this.board.turn()==="w"  ? "b"  : "w"
                     }
                 }));
 
@@ -168,7 +168,7 @@ console.log("type promote running babe");
                 this.player2.send(JSON.stringify({
                     type : GAME_OVER,
                     payload : {
-                        winner : this.board.turn()==="w"  ? "black"  : "white"
+                        winner : this.board.turn()==="w"  ? "b"  : "w"
                     }
                 }));
 
